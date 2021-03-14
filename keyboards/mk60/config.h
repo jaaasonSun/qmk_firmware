@@ -34,10 +34,8 @@
 #define DRIVER_LED_TOTAL 64
 #ifdef RGB_DI_PIN
 #    define RGBLED_NUM 64
-#    define RGB_MATRIX_FRAMBUFFER_EFFECTS
-#    define RGB_MATRIX_KEYPRESS
-#    define RGB_MATRIX_CENTER \
-        { 112, 32 }
+#    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+#    define RGB_MATRIX_KEYPRESSES
 #endif
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
