@@ -24,3 +24,4 @@ BLUETOOTH_ENABLE = no       # Enable Bluetooth
 AUDIO_ENABLE = no           # Audio output
 LTO_ENABLE = yes
 
+RGB_MATRIX_CUSTOM_KB = yes
