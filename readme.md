@@ -1,3 +1,8 @@
+# A QMK fork
+
+This is a fork of QMK firmware for custom PCBs I own, with custom layouts and animations. This repo currently has support for following keyboard(s), aside from officially supported ones:
+- Mokey 64 (a 60% layout with split right shift and arrows)
+
 # Quantum Mechanical Keyboard Firmware
 
 [![Current Version](https://img.shields.io/github/tag/qmk/qmk_firmware.svg)](https://github.com/qmk/qmk_firmware/tags)
