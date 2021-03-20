@@ -1,5 +1,9 @@
 #include "mk60.h"
 
+#define MATRIX_CAPS_LOCK_LED 35
+#define MATRIX_LAYER_LED 63
+#define MATRIX_LAYER_COUNT 4
+
 void matrix_init_kb(void) {
     // put your keyboard start-up code here
     // runs once when the firmware starts up
@@ -24,9 +28,23 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 void led_set_kb(uint8_t usb_led) {
     // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
 
-    
-
     led_set_user(usb_led);
+}
+
+void rgb_matrix_indicators_kb(void) {
+
+    uint8_t val = rgb_matrix_get_val();
+
+    if (host_keyboard_led_state().caps_lock)
+        rgb_matrix_set_color(MATRIX_CAPS_LOCK_LED, val, 0x0, 0x0);
+
+    uint8_t rgbs[MATRIX_LAYER_COUNT][3] = {{}, {val, 0, 0}, {0, val, 0}, {0, 0, val}};
+
+    for (uint8_t layer = 3; layer > 0; --layer) {
+        if (!layer_state_is(layer)) continue;
+        rgb_matrix_set_color(MATRIX_LAYER_LED, rgbs[layer][0], rgbs[layer][1], rgbs[layer][2]);
+        break;
+    }
 }
 
 led_config_t g_led_config = {
