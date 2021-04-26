@@ -9,6 +9,9 @@
 #define MANUFACTURER    MOKEY
 #define PRODUCT         MK64
 
+#define GRAVE_ESC_GUI_OVERRIDE
+#define GRAVE_ESC_CTRL_OVERRIDE
+
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 15

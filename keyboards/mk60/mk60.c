@@ -1,7 +1,11 @@
 #include "mk60.h"
 
 #define MATRIX_CAPS_LOCK_LED 35
-#define MATRIX_LAYER_LED 63
+#define MATRIX_FUNCTION_ROW_BASE 62
+#define MATRIX_FUCNTION_DIR (-1)
+#define MATRIX_LAYER_LED 49
+#define MATRIX_RESET 45
+#define MATRIX_PRE_RESET 50
 #define MATRIX_LAYER_COUNT 4
 
 void matrix_init_kb(void) {
@@ -32,17 +36,31 @@ void led_set_kb(uint8_t usb_led) {
 }
 
 void rgb_matrix_indicators_kb(void) {
-
-    uint8_t val = rgb_matrix_get_val();
-
+    
     if (host_keyboard_led_state().caps_lock)
-        rgb_matrix_set_color(MATRIX_CAPS_LOCK_LED, val, 0x0, 0x0);
+        rgb_matrix_set_color(MATRIX_CAPS_LOCK_LED, 0xa0, 0xff, 0x00);
 
-    uint8_t rgbs[MATRIX_LAYER_COUNT][3] = {{}, {val, 0, 0}, {0, val, 0}, {0, 0, val}};
 
     for (uint8_t layer = 3; layer > 0; --layer) {
         if (!layer_state_is(layer)) continue;
-        rgb_matrix_set_color(MATRIX_LAYER_LED, rgbs[layer][0], rgbs[layer][1], rgbs[layer][2]);
+        // rgb_matrix_set_color(MATRIX_LAYER_LED - layer, 0xa0, 0xff, 0x00);
+
+        int highlight_function_row[12] = {1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1};
+        if (layer == 1) {
+            for (int i = 0; i < 12; ++i) {
+                if (highlight_function_row[i])
+                    rgb_matrix_set_color(
+                        MATRIX_FUNCTION_ROW_BASE + i * MATRIX_FUCNTION_DIR,
+                        0xff, 0xff, 0xff);
+                else rgb_matrix_set_color(
+                        MATRIX_FUNCTION_ROW_BASE + i * MATRIX_FUCNTION_DIR,
+                        0xa0, 0xff, 0x00);
+            }
+            rgb_matrix_set_color(MATRIX_PRE_RESET, 0xff, 0x00, 0x00); 
+        } else if (layer == 2) {
+            rgb_matrix_set_color(MATRIX_RESET, 0xff, 0x00, 0x00); 
+        }
+        
         break;
     }
 }
